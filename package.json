@@ -1,0 +1,15 @@
+{
+  "name": "discover_vancouver",
+  "version": "1.0.0",
+  "description": "This is an app promoting Vancouver Tourism.",
+  "main": "server.js",
+  "keywords": [],
+  "author": {
+    "name": "Matthew Fung"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "oracledb": "^5.2.0"
+  }
+}

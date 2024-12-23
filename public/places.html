@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Places - Discover Vancouver</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet'>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .places-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: #f9f7ff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .places-container h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .places-container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .places-container ul li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            margin-bottom: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 5px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .places-container ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        .places-container ul li span {
+            font-size: 1rem;
+        }
+
+        .places-container ul li .rating {
+            margin-left: 1rem;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .places-container ul li button {
+            background-color: #6a4bf6;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .places-container ul li button:hover {
+            background-color: #5a3be6;
+        }
+
+        .button-container {
+            display: flex; 
+            gap: 3px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .show-ratings-btn {
+            display: block;
+            margin: 5px;
+            padding: 0.8rem 1.5rem;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .show-ratings-btn:hover {
+            background-color: #0056b3;
+        }
+
+        #attributeSelection {
+            margin: 20px 0;
+        }
+
+        #attributeSelection h3 {
+            margin-bottom: 10px;
+        }
+
+        #attributeSelection label {
+            display: block;
+            margin: 5px 0;
+        }
+
+        #attributeSelection form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        #attributeSelection label {
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+
+        #executeQueryButton {
+            cursor: pointer;
+            height: fit-content; 
+        }
+
+        .place-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .place-card p {
+            margin: 0.3rem 0;
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">
+            <img src="assets/nav0logo.png" alt="Nav Logo">
+            <a href="mainApp.html" class="logo-text">Discover Vancouver</a>
+        </div>
+        <ul>
+            <li><a href="event.html">Events</a></li> <!-- Event button -->
+            <li><a href="/giftcards.html">Gift Cards</a></li>
+            <li><a href="myReviews.html">My Reviews</a></li>
+            <li><a href="places.html">Places</a></li>
+            <li><a href="travelpass.html">Travel Passes</a></li>
+            <li><a href="notifications.html">Notifications</a></li> <!-- Notifications Tab -->
+        </ul>
+        <button id="logoutButton" class="login-button">Logout</button>
+    </nav>
+
+    <div class="content">
+        <!-- Places Section -->
+        <section class="places-container">
+            <h2>Places in Vancouver</h2>
+            
+            <!-- Option Buttons -->
+            <div class="button-container">
+                <button id="showPlacesButton" class="show-ratings-btn">Show All (Reset)</button>
+                <button id="showRatingsButton" class="show-ratings-btn">Event Ratings for Each Place</button>
+                <button id="showRestaurantsButton" class="show-ratings-btn">View Restaurants</button>
+                <button id="findReviewedPlacesButton" class="show-ratings-btn">Find Places reviewed by all Users</button>
+            </div>
+
+            <!-- Projection Form -->
+            <div id="attributeSelection">
+                <h3>Select Attributes to View</h3>
+                <form id="attributesForm">
+                    <label><input type="checkbox" name="attribute" value="Name"> Name</label>
+                    <label><input type="checkbox" name="attribute" value="Address"> Address</label>
+                    <label><input type="checkbox" name="attribute" value="Phone"> Phone</label>
+                    <label><input type="checkbox" name="attribute" value="OpeningTime"> Opening Time</label>
+                    <label><input type="checkbox" name="attribute" value="ClosingTime"> Closing Time</label>
+                    <label><input type="checkbox" name="attribute" value="Description"> Description</label>
+                    <label><input type="checkbox" name="attribute" value="StopID"> Stop ID</label>
+                    <button id="executeQueryButton" class="show-ratings-btn">Search</button>
+                </form>
+            </div>        
+            
+            <ul id="placesList">
+                <!-- Places will be dynamically added here -->
+            </ul>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2024 Discover Vancouver</p>
+        <p>
+            Made with ❤️ in Vancouver. Explore more  
+            <a href="https://www.vancouver.ca" target="_blank" rel="noopener">Here</a>
+        </p>
+    </footer>  
+    <script src="scripts.js"></script>
+</body>
+</html>
